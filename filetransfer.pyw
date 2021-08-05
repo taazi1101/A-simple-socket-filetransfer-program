@@ -62,6 +62,8 @@ def send(root,listbox,port_entry,ip_entry):
     time.sleep(1)
     sock.send(str(len(items)).encode())
     for file in items:
+        lable["text"] = file
+        lable.grid(row=5,column=0,columnspan=3)
         time.sleep(0.1)
         sock.send(os.path.basename(file).encode())
         time.sleep(0.1)
