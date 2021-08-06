@@ -43,6 +43,8 @@ def recv(root,listbox,port_entry,ip_entry):
         except:
             lable['text'] = "Error transfering file."
             lable.grid(row=5,column=0,columnspan=3)
+        listbox.insert(END,os.path.abspath(filename))
+        
     sock.close()
     lable["text"] = "Done."
     lable.grid(row=5,column=0,columnspan=3)
@@ -54,8 +56,14 @@ def send(root,listbox,port_entry,ip_entry):
     lable.grid(row=5,column=0,columnspan=3)
     items = list(listbox.get(0,END))
     sock = socket.socket()
-
-    sock.connect((ip_entry.get(),int(port_entry.get())))
+ 
+    while True:
+        try:
+            sock.connect((ip_entry.get(),int(port_entry.get())))
+            break
+        except ConnectionRefusedError:
+            continue
+    
     lable["text"] = "Connection succesful."
     lable.grid(row=5,column=0,columnspan=3)
 
